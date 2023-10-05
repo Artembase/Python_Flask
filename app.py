@@ -8,7 +8,6 @@ db = SQLAlchemy(app)
 
 
 class Article(db.Model):
-
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), primary_key=False)
     intro = db.Column(db.String(300), primary_key=False)
@@ -30,6 +29,12 @@ def about():
     return render_template("about.html")
 
 
+@app.route('/posts')
+def posts():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("posts.html", articles=articles)
+
+
 @app.route('/create-article', methods=['POST', 'GET'])
 def create_article():
     if request.method == 'POST':
@@ -37,14 +42,14 @@ def create_article():
         intro = request.form['intro']
         text = request.form['text']
 
-        article = Article(title = title, intro = intro, text = text)
+        article = Article(title=title, intro=intro, text=text)
 
         try:
             db.session.add(article)
             db.session.commit()
             return redirect('/')
         except:
-            return 'ПЫридобавление статьи произошла ошибка'
+            return 'ПЫри добавление статьи произошла ошибка'
     else:
         return render_template("create-article.html")
 

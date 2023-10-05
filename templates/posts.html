@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Все посты в бд
+{% endblock %}
+
+{% block body%}
+<div class="container mt-5">
+    <h1> Записи из бд1</h1>
+
+    {% for e in articles %}
+    <div class="alert alert-info">
+        <h2> {{e.title}} </h2>
+        <p> {{e.intro}} </p>
+        <p><b> Дата: {{e.date.date() }}</b></p>
+        <button class="btn btn-warning">Детальнее</button>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
