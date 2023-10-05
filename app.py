@@ -3,15 +3,20 @@ from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog1.db'
 db = SQLAlchemy(app)
+
+#init database
+# from app import app, db
+# app.app_context().push()
+# db.create_all()
 
 
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), primary_key=False)
-    intro = db.Column(db.String(300), primary_key=False)
-    text = db.Column(db.Text, nullable=False)
+    title = db.Column(db.String(100), primary_key=False, default='')
+    intro = db.Column(db.String(300), primary_key=False, default='')
+    text = db.Column(db.Text, nullable=False, default='')
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
