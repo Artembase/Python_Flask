@@ -10,8 +10,11 @@
 
     {% for e in articles %}
     <div class="alert alert-info">
-        <h2> {{e.title}} </h2>
-        <p> {{e.intro}} </p>
+        <h2> {{e.id}} </h2>
+        <p> {{e.name}} </p>
+        <p> {{e.index}} </p>
+        <p> {{e.quantity}} </p>
+        <p> {{e.cost}} </p>
         <p><b> Дата: {{e.date.date() }}</b></p>
         <button class="btn btn-warning">Детальнее</button>
     </div>
@@ -19,3 +22,4 @@
 </div>
 
 {% endblock %}
+
