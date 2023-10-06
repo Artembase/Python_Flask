@@ -19,7 +19,7 @@ class Article(db.Model):
     index = db.Column(db.String(100), primary_key=False, default='')
     quantity = db.Column(db.Integer)
     cost = db.Column(db.Integer, nullable=False)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
+    date = db.Column(db.DateTime, default=datetime.now)
 
     def __repr__(self):
         return '<Article %r>' % self.id
@@ -43,8 +43,62 @@ def index():
 
 
 @app.route('/about')
-def about():
-    return render_template("about.html")
+def about_posts():
+    sum_articles = 0
+    sum_articles_for_today = 0
+    sum_articles_for_week = 0
+    sum_articles_for_month = 0
+    sum_income = 0
+    sum_incomes_for_today = 0
+    sum_incomes_for_week = 0
+    sum_incomes_for_month = 0
+    for_date = ''
+
+    to_day = datetime.today().date()
+    a = ''
+    articles = Article.query.order_by(Article.date.desc()).all()
+
+    for e in articles:
+        sum_articles += e.cost
+        for_date = e.date.date()
+        # разница в днях между сегодня и дой из бд
+        a = to_day - for_date
+        a = a.days
+        if a < 1:
+            sum_articles_for_today += e.cost
+        elif a < 7:
+            sum_articles_for_week += e.cost
+
+        elif a < 30:
+            sum_articles_for_month += e.cost
+
+    sum_articles_for_week += sum_articles_for_today
+    sum_articles_for_month += sum_articles_for_week
+
+
+    income = Income.query.order_by(Income.date.desc()).all()
+    for e in income:
+        sum_income += e.sum_sal
+        for_date = e.date.date()
+        # разница в днях между сегодня и датой из бд
+        a = to_day - for_date
+        a = a.days
+        if a < 1:
+            sum_incomes_for_today += e.sum_sal
+        elif a < 7:
+            sum_incomes_for_week += e.sum_sal
+        elif a < 30:
+            sum_incomes_for_month += e.sum_sal
+
+    sum_incomes_for_week += sum_incomes_for_today
+    sum_incomes_for_month += sum_incomes_for_week
+
+    return render_template("about.html", sum_articles=sum_articles,
+                           sum_income=sum_income, for_date=for_date, to_day=to_day
+                           , a=a, sum_articles_for_week=sum_articles_for_week,
+                           sum_articles_for_month=sum_articles_for_month, sum_articles_for_today=sum_articles_for_today
+                           , sum_incomes_for_today=sum_incomes_for_today, sum_incomes_for_week=sum_incomes_for_week
+                           , sum_incomes_for_month=sum_incomes_for_month)
 
 
 @app.route('/posts')

@@ -6,4 +6,28 @@
 
 {% block body%}
 <h1> Основная страница эбоут Денег</h1>
+<div class="row">
+    <div class="col-6">
+        <h1>Доходы</h1>
+        <h2>За сегодня:</h2>
+        <h3>{{sum_incomes_for_today}}</h3>
+        <h2>За неделю:</h2>
+        <h3>{{sum_incomes_for_week}}</h3>
+        <h2>За месяц:</h2>
+        <h3>{{sum_incomes_for_month}}</h3>
+        <h2>За все время:</h2>
+        <h3>{{sum_income}}</h3>
+    </div>
+    <div class="col-6">
+        <h1>Расходы</h1>
+        <h2>За сегодня:</h2>
+        <h3>{{sum_articles_for_today}}</h3>
+        <h2>За неделю:</h2>
+        <h3>{{sum_articles_for_week}}</h3>
+        <h2>За 30 дней:</h2>
+        <h3>{{sum_articles_for_month}}</h3>
+        <h2>За все время:</h2>
+        <h3>{{sum_articles}}</h3>
+    </div>
+</div>
 {% endblock %}

@@ -13,20 +13,22 @@
     <header>
     <div class=" d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
       <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-         <span class="fs-4 text-body-emphasis">Рассчет доходов и рассходов</span>
+         <span class="fs-4 align-center text-body-emphasis">Рассчет доходов и рассходов</span>
       </a>
       <nav class="d-inline-flex mt
 -2 mt-md-0 ms-md-auto">
         <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/about">Статистика</a>
         <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/create-article">Добавить</a>
         <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/posts">Рассходы</a>
-        <a class="py-2 link-body-emphasis text-decoration-none" href="/income">Доб Доходы</a>
-          <a class="py-2 link-body-emphasis text-decoration-none" href="/incomes">Доходы</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/income">Доб Доходы</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/incomes">Доходы</a>
       </nav>
     </div>
 
     <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-      <h1 class="display-4 fw-normal text-body-emphasis">{% block body %}{% endblock %}</h1>
+      <h1 class="display-4 fw-normal text-body-emphasis">{% block body %}
+
+          {% endblock %}</h1>
       <p class="fs-5 text-body-secondary">____________</p>
     </div>
   </header>
