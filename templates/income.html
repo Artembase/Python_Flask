@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Главная страница эбоут
+{% endblock %}
+
+{% block body%}
+<h1> Добавлеие доходов</h1>
+
+<div class="container mt-5">
+    <h1></h1>
+    <form method="post">
+        <input type="text" name="index_sal" id="index_sal" class="form-control"  placeholder="Индекс заработка"><br>
+        <input type="text" name="sum_sal" id="sum_sal" class="form-control"  placeholder="Сумма заработка"><br>
+        <input type="text" name="name_sal" id="name_sal" class="form-control"  placeholder="Название заработка"><br>
+
+        <input type="submit"  class="btn btn-success" value="Отправить"><br>
+
+    </form>
+</div>
+
+
+{% endblock %}

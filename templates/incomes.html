@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Все посты в бд
+{% endblock %}
+
+{% block body%}
+<div class="container mt-5">
+    <h1> Записи из бд c доходами</h1>
+
+    {% for e in income %}
+    <div class="alert alert-info">
+        <h2> {{e.id}} </h2>
+        <p> {{e.index_sal}} </p>
+        <p> {{e.sum_sal}} </p>
+        <p> {{e.name_sal}} </p>
+        <p><b> Дата: {{e.date.date() }}</b></p>
+        <button class="btn btn-warning">Детальнее</button>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
