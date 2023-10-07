@@ -15,9 +15,9 @@ db = SQLAlchemy(app)
 
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), primary_key=False)
+    name = db.Column(db.String(100), primary_key=False, default='Не указана покупка')
     index = db.Column(db.String(100), primary_key=False, default='')
-    quantity = db.Column(db.Integer)
+    quantity = db.Column(db.Integer, default=1)
     cost = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime, default=datetime.now)
 
@@ -27,9 +27,9 @@ class Article(db.Model):
 
 class Income(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    index_sal = db.Column(db.Integer, primary_key=False)
-    sum_sal = db.Column(db.Integer, primary_key=False)
-    name_sal = db.Column(db.String(100))
+    index_sal = db.Column(db.Integer, primary_key=False, default=0)
+    sum_sal = db.Column(db.Integer, primary_key=False, default=0)
+    name_sal = db.Column(db.String(100), default='Не указано описание')
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
@@ -48,36 +48,43 @@ def about_posts():
     sum_articles_for_today = 0
     sum_articles_for_week = 0
     sum_articles_for_month = 0
+    sum_articles_for_year = 0
     sum_income = 0
     sum_incomes_for_today = 0
     sum_incomes_for_week = 0
     sum_incomes_for_month = 0
+    sum_incomes_for_year = 0
     for_date = ''
+    cost = 0
+    x = 0
 
     to_day = datetime.today().date()
     a = ''
     articles = Article.query.order_by(Article.date.desc()).all()
-
+    # Расходы
     for e in articles:
-        sum_articles += e.cost
+
+        cost = e.cost
+        x = e.quantity
+        sum_articles += x * cost
+        sum_articles_for_year += sum_articles
         for_date = e.date.date()
         # разница в днях между сегодня и дой из бд
         a = to_day - for_date
         a = a.days
         if a < 1:
-            sum_articles_for_today += e.cost
-        elif a < 7:
-            sum_articles_for_week += e.cost
-
-        elif a < 30:
-            sum_articles_for_month += e.cost
+            sum_articles_for_today += sum_articles
+        elif a <= 7:
+            sum_articles_for_week += sum_articles
+        elif a <= 30:
+            sum_articles_for_month += sum_articles
 
     sum_articles_for_week += sum_articles_for_today
     sum_articles_for_month += sum_articles_for_week
-
-
+# Доходы
     income = Income.query.order_by(Income.date.desc()).all()
     for e in income:
+
         sum_income += e.sum_sal
         for_date = e.date.date()
         # разница в днях между сегодня и датой из бд
@@ -94,11 +101,12 @@ def about_posts():
     sum_incomes_for_month += sum_incomes_for_week
 
     return render_template("about.html", sum_articles=sum_articles,
-                           sum_income=sum_income, for_date=for_date, to_day=to_day
-                           , a=a, sum_articles_for_week=sum_articles_for_week,
-                           sum_articles_for_month=sum_articles_for_month, sum_articles_for_today=sum_articles_for_today
-                           , sum_incomes_for_today=sum_incomes_for_today, sum_incomes_for_week=sum_incomes_for_week
-                           , sum_incomes_for_month=sum_incomes_for_month)
+                           sum_income=sum_income, for_date=for_date, to_day=to_day,
+                           a=a, sum_articles_for_week=sum_articles_for_week,
+                           sum_articles_for_month=sum_articles_for_month, sum_articles_for_today=sum_articles_for_today,
+                           sum_incomes_for_today=sum_incomes_for_today, sum_incomes_for_week=sum_incomes_for_week,
+                           sum_incomes_for_month=sum_incomes_for_month, sum_articles_for_year=sum_articles_for_year,
+                           )
 
 
 @app.route('/posts')
@@ -116,6 +124,7 @@ def posts2():
 @app.route('/create-article', methods=['POST', 'GET'])
 def create_article():
     if request.method == 'POST':
+
         name = request.form['name']
         index = request.form['index']
         quantity = request.form['quantity']
@@ -126,7 +135,7 @@ def create_article():
         try:
             db.session.add(article)
             db.session.commit()
-            return redirect('/')
+            return redirect('/create-article')
         except:
             return 'ПЫри добавление расходов произошла ошибка'
 
@@ -146,7 +155,7 @@ def income1():
         try:
             db.session.add(income)
             db.session.commit()
-            return redirect('/')
+            return redirect('/income')
         except:
             return 'ПЫри добавление дохода произошла ошибка'
 
