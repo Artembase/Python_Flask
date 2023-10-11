@@ -104,20 +104,18 @@ def login():
     if request.method == 'POST':
         email_login = request.form['email_login']
         psw_login = request.form['psw_login']
-        registration = Registration.query.order_by(Registration.date.desc())
+        registration = Registration.query.order_by(Registration.date.desc()).all()
 
         for e in registration:
             db_email = e.email
             db_password = e.psw
-
+            print(e.email + 'каждый из пользователей')
             if email_login == db_email and check_password_hash(db_password, psw_login):
                 user = Registration.query.filter_by(email=email_login).first()
-
-                print(user)
                 login_user(user)
                 return render_template("index.html")
-            else:
-                return 'Не правильно введен логин или пароль'
+            # else:
+            #     return 'Не правильно введен логин или пароль'
         # if email_login
     return render_template("login.html")
 
