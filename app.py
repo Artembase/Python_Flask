@@ -5,11 +5,18 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_login import UserMixin
 import flask_login
+from sqlalchemy.dialects. postgresql import psycopg2
+import os
 
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
+DATABASE_URL = ('postgresql://inandoutcome_user:Pplk1TobSualfFIxOp8Mgs5j3XiiL0YN@dpg-ckj9e5q12bvs738qmub0-a.oregon'
+                '-postgres.render.com/inandoutcome')
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+    # os.environ.get('DATABASE_URL'))
+
 db = SQLAlchemy(app)
 
 login_manager = flask_login.LoginManager()
