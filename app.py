@@ -112,12 +112,10 @@ def login():
 
             if email_login == db_email and check_password_hash(db_password, psw_login):
                 user = Registration.query.filter_by(email=email_login).first()
-
-                print(user)
                 login_user(user)
                 return render_template("index.html")
-            else:
-                return 'Не правильно введен логин или пароль'
+            # else:
+            #     return 'Не правильно введен логин или пароль'
         # if email_login
     return render_template("login.html")
 
