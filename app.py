@@ -5,11 +5,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_login import UserMixin
 import flask_login
+from sqlalchemy.dialects. postgresql import psycopg2
+import os
 
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
+DATABASE_URL = ('postgresql://inandoutcome_user:Pplk1TobSualfFIxOp8Mgs5j3XiiL0YN@dpg-ckj9e5q12bvs738qmub0-a.oregon-postgres.render.com/inandoutcome')
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+    # os.environ.get('DATABASE_URL'))
+
 db = SQLAlchemy(app)
 
 login_manager = flask_login.LoginManager()
@@ -104,18 +110,20 @@ def login():
     if request.method == 'POST':
         email_login = request.form['email_login']
         psw_login = request.form['psw_login']
-        registration = Registration.query.order_by(Registration.date.desc()).all()
+        registration = Registration.query.order_by(Registration.date.desc())
 
         for e in registration:
             db_email = e.email
             db_password = e.psw
-            print(e.email + 'каждый из пользователей')
+
             if email_login == db_email and check_password_hash(db_password, psw_login):
                 user = Registration.query.filter_by(email=email_login).first()
+
+                print(user)
                 login_user(user)
                 return render_template("index.html")
-            # else:
-            #     return 'Не правильно введен логин или пароль'
+            else:
+                return 'Не правильно введен логин или пароль'
         # if email_login
     return render_template("login.html")
 
