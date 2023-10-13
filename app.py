@@ -6,7 +6,6 @@ from flask_login import login_user, login_required, logout_user, current_user
 from flask_login import UserMixin
 import flask_login
 
-
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
@@ -202,11 +201,26 @@ def posts2():
     return render_template("incomes.html", income=income)
 
 
-@app.route('/delete', methods=['POST', 'GET'])
-def delete():
-    if request.method == 'POST':
-        income = Income.query.filter(Income.user_id == current_user.id).order_by(Income.date.desc()).all()
-        return render_template("income.html", income=income)
+@app.route('/delete/<int:id>/outcome', methods=['POST', 'GET'])
+def delete_outcome(id):
+    article = Article.query.get_or_404(id)
+    try:
+        db.session.delete(article)
+        db.session.commit()
+        return redirect('/posts')
+    except:
+        return 'ПЫри удалении произошла ошибка'
+
+
+@app.route('/delete/<int:id>/income', methods=['POST', 'GET'])
+def delete_income(id):
+    income = Income.query.get_or_404(id)
+    try:
+        db.session.delete(income)
+        db.session.commit()
+        return redirect('/incomes')
+    except:
+        return 'ПЫри удалении произошла ошибка'
 
 
 @app.route('/create-article', methods=['POST', 'GET'])

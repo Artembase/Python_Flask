@@ -10,21 +10,17 @@
 
     {% for e in articles %}
     <div class="alert alert-info">
-        <h2 > {{e.id}} </h2>
-        <p> {{e.name}} </p>
-        <p> {{e.index}} </p>
-        <p> {{e.quantity}} </p>
-        <p> {{e.cost}} </p>
-        <p><b> Дата: {{e.date.date() }}</b></p>
-
-        <form method="post">
-
-            <input type="submit" id="e.id" class="btn btn-danger" value="Удалить"><br>
-<!--            <button  class="btn btn-danger">Удалить</button>-->
-        </form>
+<!--        <h2 > {{e.id}} </h2>-->
+        <p> Название: {{e.name}} </p>
+        <p> Категория/Индекс: {{e.index}} </p>
+        <p> Кол-во: {{e.quantity}} </p>
+        <p> Цена: {{e.cost}} </p>
+        <p><b> Дата: {{e.date.date() }}</b></p><br>
+        <a type="submit"  class="btn btn-danger" href="/delete/{{ e.id }}/outcome">Удалить</a><br>
     </div>
     {% endfor %}
-</div>
+
+ </div>
 
 {% endblock %}
 

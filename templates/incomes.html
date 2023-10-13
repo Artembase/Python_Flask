@@ -9,17 +9,13 @@
     <h1> Все доходы</h1>
 
     {% for e in income %}
-    <div class="alert alert-info">
-        <h2> {{e.id}} </h2>
-        <p> {{e.index_sal}} </p>
-        <p> {{e.sum_sal}} </p>
-        <p> {{e.name_sal}} </p>
-        <p><b> Дата: {{e.date.date() }}</b></p>
-        <form method="post">
-
-            <input type="submit"  class="btn btn-danger" value="Удалить"><br>
-<!--            <button  class="btn btn-danger">Удалить</button>-->
-        </form>
+   <div class="alert alert-info">
+<!--        <h2 > {{e.id}} </h2>-->
+        <p> Категория/Индекс: {{e.index_sal}} </p>
+        <p> Цена: {{e.sum_sal}} </p>
+        <p> Название: {{e.name_sal}} </p>
+        <p><b> Дата: {{e.date.date() }}</b></p><br>
+        <a type="submit"  class="btn btn-danger" href="/delete/{{ e.id }}/income">Удалить</a><br>
     </div>
     {% endfor %}
 </div>
