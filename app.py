@@ -1,6 +1,6 @@
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_login import UserMixin
@@ -144,7 +144,7 @@ def about_posts():
 
         cost = e.cost
         x = e.quantity
-        sum_articles += x * cost
+        sum_articles = x * cost
         sum_articles_for_year += sum_articles
         for_date = e.date.date()
         # разница в днях между сегодня и дой из бд
@@ -200,6 +200,13 @@ def posts():
 def posts2():
     income = Income.query.filter(Income.user_id == current_user.id).order_by(Income.date.desc()).all()
     return render_template("incomes.html", income=income)
+
+
+@app.route('/delete', methods=['POST', 'GET'])
+def delete():
+    if request.method == 'POST':
+        income = Income.query.filter(Income.user_id == current_user.id).order_by(Income.date.desc()).all()
+        return render_template("income.html", income=income)
 
 
 @app.route('/create-article', methods=['POST', 'GET'])

@@ -5,15 +5,15 @@
 {% endblock %}
 
 {% block body%}
-<h1> Добавлеие доходов</h1>
+<h1> Добавление доходов</h1>
 
 <div class="container mt-5">
         <form method="post">
-        <input type="number" name="index_sal" id="index_sal" class="form-control"  placeholder="Индекс заработка" required><br>
-        <input type="number" name="sum_sal" id="sum_sal" class="form-control"  placeholder="Сумма заработка" required><br>
+        <input type="number" min='0' name="index_sal" id="index_sal" class="form-control"  placeholder="Индекс заработка" required><br>
+        <input type="number" min='0' name="sum_sal" id="sum_sal" class="form-control"  placeholder="Сумма заработка" required><br>
         <input type="text" name="name_sal" id="name_sal" class="form-control"  placeholder="Название заработка" required><br>
 
-        <input type="submit"  class="btn btn-success" value="Отправить"><br>
+        <input type="submit"  class="btn btn-success" value="Добавить"><br>
 
     </form>
 </div>

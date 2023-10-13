@@ -6,7 +6,7 @@
 
 {% block body%}
 <div class="container mt-5">
-    <h1> Записи из бд c доходами</h1>
+    <h1> Все доходы</h1>
 
     {% for e in income %}
     <div class="alert alert-info">
@@ -15,7 +15,11 @@
         <p> {{e.sum_sal}} </p>
         <p> {{e.name_sal}} </p>
         <p><b> Дата: {{e.date.date() }}</b></p>
-        <button class="btn btn-warning">Детальнее</button>
+        <form method="post">
+
+            <input type="submit"  class="btn btn-danger" value="Удалить"><br>
+<!--            <button  class="btn btn-danger">Удалить</button>-->
+        </form>
     </div>
     {% endfor %}
 </div>

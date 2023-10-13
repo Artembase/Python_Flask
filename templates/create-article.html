@@ -5,17 +5,15 @@
 {% endblock %}
 
 {% block body%}
-<h1> Основная страница эбоут Денег</h1>
-
 <div class="container mt-5">
     <h1>Добавление расходов</h1>
     <form method="post">
-        <input type="text" name="name" id="name" class="form-control"  placeholder="Название" required><br>
-        <input type="number" name="index" id="index" class="form-control"  placeholder="Индекс" required><br>
-        <input type="number" name="quantity" id="quantity" class="form-control"  placeholder="Кол-во" required><br>
-        <input type="number" name="cost" id="cost" class="form-control"  placeholder="Цена" required><br>
+        <input type="text"  name="name" id="name" class="form-control"  placeholder="Название" required><br>
+        <input type="number" min='0' name="index" id="index" class="form-control"  placeholder="Индекс" required><br>
+        <input type="number" min='0' name="quantity" id="quantity" class="form-control"  placeholder="Кол-во" required><br>
+        <input type="number" min='0' name="cost" id="cost" class="form-control"  placeholder="Цена" required><br>
 
-        <input type="submit"  class="btn btn-success" value="Отправить"><br>
+        <input type="submit"  class="btn btn-success" value="Добавить"><br>
 
     </form>
 </div>

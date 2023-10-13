@@ -6,17 +6,22 @@
 
 {% block body%}
 <div class="container mt-5">
-    <h1> Записи из бд1</h1>
+    <h1> Все рассходы</h1>
 
     {% for e in articles %}
     <div class="alert alert-info">
-        <h2> {{e.id}} </h2>
+        <h2 > {{e.id}} </h2>
         <p> {{e.name}} </p>
         <p> {{e.index}} </p>
         <p> {{e.quantity}} </p>
         <p> {{e.cost}} </p>
         <p><b> Дата: {{e.date.date() }}</b></p>
-        <button class="btn btn-warning">Детальнее</button>
+
+        <form method="post">
+
+            <input type="submit" id="e.id" class="btn btn-danger" value="Удалить"><br>
+<!--            <button  class="btn btn-danger">Удалить</button>-->
+        </form>
     </div>
     {% endfor %}
 </div>
