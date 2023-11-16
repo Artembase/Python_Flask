@@ -5,11 +5,19 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_login import UserMixin
 import flask_login
+from sqlalchemy import create_engine
+import psycopg2
+from config import host, user, password, db_name
+
+# 'postgresql://main:123@localhost:5432/purchases'
+# sqlite:///expenses.db
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://main:123@localhost:5432/purchases'
 db = SQLAlchemy(app)
+
+
 
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
@@ -68,6 +76,9 @@ class Income(db.Model):
     def __repr__(self):
         return '<Income %r>' % self.id
 
+
+app.app_context().push()
+db.create_all()
 
 @app.route('/')
 @app.route('/home')
